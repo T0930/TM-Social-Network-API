@@ -26,7 +26,7 @@ module.exports = {
           ? res.status(404).json({ message: 'No user with that ID' })
           : res.json({
               user,
-              thought: await thought(req.params.userId),
+              thought: await Thought.findById(req.params.userId),
             })
       )
       .catch((err) => {

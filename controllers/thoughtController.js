@@ -19,14 +19,34 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   // Create a thought
+  // createThought(req, res) {
+  //   Thought.create(req.body)
+  //     .then((thought) => res.json(thought))
+  //     .catch((err) => {
+  //       console.log(err);
+  //       return res.status(500).json(err);
+  //     });
   createThought(req, res) {
     Thought.create(req.body)
-      .then((thought) => res.json(thought))
+      .then((thoughts) => {
+        return User.findOneAndUpdate(
+          { _id: req.body.userId },
+          { $addToSet: { thoughts: thoughts._id } },
+          { new: true }
+        );
+      })
+      .then((user) =>
+        !user
+          ? res
+              .status(404)
+              .json({ message: 'Thought created, but found no user with that ID' })
+          : res.json('Created the Thought 🎉')
+      )
       .catch((err) => {
         console.log(err);
-        return res.status(500).json(err);
+        res.status(500).json(err);
       });
-  },
+  },    
   // Delete a thought
   deleteThought(req, res) {
     Thought.findOneAndDelete({ _id: req.params.thoughtId })
