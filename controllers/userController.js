@@ -5,6 +5,8 @@ module.exports = {
   // Get all users
   getUsers(req, res) {
     User.find()
+    .populate('friends')
+    .populate('thoughts')
       .then(async (users) => {
         const userObj = {
           users,
@@ -55,9 +57,9 @@ module.exports = {
       .then((thought) =>
         !thought
           ? res.status(404).json({
-              message: 'Student deleted, but no thoughts found',
+              message: 'User deleted, but no thoughts found',
             })
-          : res.json({ message: 'Student successfully deleted' })
+          : res.json({ message: 'User successfully deleted' })
       )
       .catch((err) => {
         console.log(err);
@@ -88,6 +90,44 @@ module.exports = {
     User.findOneAndUpdate(
       { _id: req.params.userId },
       { $pull: { thought: { thoughtId: req.params.thoughtId } } },
+      { runValidators: true, new: true }
+    )
+      .then((user) =>
+        !user
+          ? res
+              .status(404)
+              .json({ message: 'No user found with that ID :(' })
+          : res.json(user)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+  // Add friend
+  addFriend(req, res) {
+    console.log('You are adding a friend');
+    console.log(req.body);
+    console.log(req.params.userId)
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $addToSet: { friends: req.params.friendId } },
+      { runValidators: true, new: true }
+    )
+      .then((user) =>
+        !user
+          ? res
+              .status(404)
+              .json({ message: 'No user found with that ID :(' })
+          : res.json(user)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+   // Delete friend
+   deleteFriend(req, res) {
+    console.log('You are deleting a friend');
+    console.log(req.body);
+    console.log(req.params.userId)
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $pull: { friends: req.params.friendId } },
       { runValidators: true, new: true }
     )
       .then((user) =>

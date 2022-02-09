@@ -15,12 +15,11 @@ const thoughtSchema = new Schema(
             type: Date,
             default: Date.now,
         },
-        username: [
+        username:
             {
-                type: Schema.Types.ObjectId,
-                ref: 'User',
+                type: String,
+                required: true,
             },
-        ],
         reactions:
             [reactionSchema] 
     },
@@ -32,6 +31,6 @@ const thoughtSchema = new Schema(
     }
 );
 
-const Thought = model('thought', thoughtSchema);
+const Thought = model('Thought', thoughtSchema);
 
 module.exports = Thought;
