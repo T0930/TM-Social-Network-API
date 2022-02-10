@@ -11,7 +11,7 @@
 
 # Screen Shot:  
 ## Postman:
-![Preview](will update)
+![Preview](https://github.com/T0930/TM-Social-Network-API/blob/main/images/tmsocialscreenshot.png?raw=true)
 
 # Video and Repository Links:
 [TM-Social-Network-API](https://github.com/T0930/TM-Social-Network-API)
