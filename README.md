@@ -16,4 +16,4 @@
 # Video and Repository Links:
 [TM-Social-Network-API](https://github.com/T0930/TM-Social-Network-API)
 #
-[TM-Social-Network-API-Walthrough Video](will update)
+[TM-Social-Network-API-Walthrough Video](https://vimeo.com/675760991)
